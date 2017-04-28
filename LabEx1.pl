@@ -32,7 +32,16 @@ type		     --> [integer] | [boolean] | [real].
 /******************************************************************************/
 /* Stat part                                                                  */
 /******************************************************************************/
-stat_part            -->  stat_part_todo.
+stat_part		-->  [begin], stat_list, [end], ['.'].
+stat_list		-->  stat | stat, [';'], stat_list.
+stat			-->  assign_stat.
+assign_stat		-->  id, [assign], expr.
+expr			-->  id | term, '+', expr.
+term			-->  factor | term, '*', factor.
+factor			-->  ['('], expr, [')'] | operand.
+operand			-->  id | number.
+
+
 stat_part_todo(_,_)  :-   write('stat_part: To Be Done'), nl.
 
 /******************************************************************************/
@@ -102,7 +111,11 @@ stat_part_todo(_,_)  :-   write('stat_part: To Be Done'), nl.
 /******************************************************************************/
 /* Define the above tests                                                     */
 /******************************************************************************/
+
 testvar :- var_part([var, a, ':', integer, ';'],[]).
+
+testps :- stat_part([begin, a, assign, b, '*', c, ';', a, assign, b, '+', c, end, '.'], []).
+
 testph :- prog_head([program, c, '(', input, ',', output, ')', ';'], []).
 testpr :-   program([program, c, '(', input, ',', output, ')', ';'], []).
 
