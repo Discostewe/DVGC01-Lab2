@@ -19,8 +19,15 @@ id            --> [a]|[b]|[c].
 /******************************************************************************/
 /* Var_part                                                                   */
 /******************************************************************************/
-var_part             --> var_part_todo.
-var_part_todo(_,_)   :-  write('var_part:  To Be Done'), nl.
+var_part             --> [var], var_declist.
+
+var_declist	     --> var_dec | var_dec, var_declist.
+
+var_dec		     --> id_list, [':'], type, [';'].
+
+id_list		     --> id | id, [','], id_list.
+
+type		     --> [integer] | [boolean] | [real].
 
 /******************************************************************************/
 /* Stat part                                                                  */
@@ -95,7 +102,7 @@ stat_part_todo(_,_)  :-   write('stat_part: To Be Done'), nl.
 /******************************************************************************/
 /* Define the above tests                                                     */
 /******************************************************************************/
-
+testvar :- var_part([var, a, ':', integer, ';'],[]).
 testph :- prog_head([program, c, '(', input, ',', output, ')', ';'], []).
 testpr :-   program([program, c, '(', input, ',', output, ')', ';'], []).
 
