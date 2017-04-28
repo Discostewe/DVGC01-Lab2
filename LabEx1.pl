@@ -95,8 +95,7 @@ stat_part_todo(_,_)  :-   write('stat_part: To Be Done'), nl.
 /* Program header                                                             */
 /******************************************************************************/
 /* prog_head([program, c, '(', input, ',', output, ')', ';'], []).            */
-/******************************************************
-************************/
+/******************************************************************************/
 
 /******************************************************************************/
 /* Whole program                                                              */
@@ -116,7 +115,7 @@ stat_part_todo(_,_)  :-   write('stat_part: To Be Done'), nl.
 
 testvar :- var_part([var, a, ':', integer, ';', b, ',' , c,':', real, ';'], []).
 
-testps :- stat_part([begin, a, assign, b, '*', c, ';', a, assign, b, '+', c, end, '.'], []).
+teststat :- stat_part([begin, a, assign, b, '*', c, ';', a, assign, b, '+', c, end, '.'], []).
 
 testph :- prog_head([program, c, '(', input, ',', output, ')', ';'], []).
 testpr :-   program([program, c, '(', input, ',', output, ')', ';'], []).
