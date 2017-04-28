@@ -42,6 +42,8 @@ restsent(_, C, [W1 | Ws ]) :- readword(C, W1, C1), restsent(W1, C1, Ws).
 
 readword(C, W, _)  :- C = -1, W = C.                    /* added EOF handling */
 
+redadword(C,W,C0) :- C = 58, get0(C1), readwordaux(C,W,C1,C0).
+
 readword(C, W, C1) :- single_character( C ), name(W, [C]), get0(C1).
 
 readword(C, W, C2) :-
@@ -58,7 +60,9 @@ readword(C, W, C2) :-
 
 readword(_, W, C2) :- get0(C1), readword(C1, W, C2).
 
+readwordaux(C,W,C1,C2) :- C1 = 61, name(W,[C,C1]), get0(C2).
 
+readwordaux(C,W,C1,C2) :- C1 \= 61, name(W,[C]), C1 = C2.
 
 restword(C, [NewC|Cs], C2) :-
 
