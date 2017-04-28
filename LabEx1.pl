@@ -13,8 +13,9 @@ program       --> prog_head, var_part, stat_part.
 /******************************************************************************/
 /* Program Header                                                             */
 /******************************************************************************/
-prog_head     --> [program], id, ['('], [input], [','], [output], [')'], [';'].
-id            --> [a]|[b]|[c].
+prog_head     	--> [program], id, ['('], [input], [','], [output], [')'], [';'].
+id		--> [a]|[b]|[c].
+num		--> [0],[1],[2],[3],[4],[5],[6],[7],[8],[9].
 
 /******************************************************************************/
 /* Var_part                                                                   */
@@ -29,10 +30,10 @@ stat_part		-->  [begin], stat_list, [end], ['.'].
 stat_list		-->  stat | stat, [';'], stat_list.
 stat			-->  assign_stat.
 assign_stat		-->  id, [assign], expr.
-expr			-->  id | term, '+', expr.
-term			-->  factor | term, '*', factor.
+expr			-->  term | term, ['+'], expr.
+term			-->  factor | factor, ['*'], term.
 factor			-->  ['('], expr, [')'] | operand.
-operand			-->  id | number.
+operand			-->  id | num.
 
 
 stat_part_todo(_,_)  :-   write('stat_part: To Be Done'), nl.
