@@ -8,12 +8,12 @@
 /* This is a slightly modified from of the Pascal Grammar for Lab 2 Prolog    */
 /******************************************************************************/
 
-program       --> prog_head, var_part, stat_part.
+prog       --> prog_head, var_part, stat_part.
 
 /******************************************************************************/
 /* Program Header                                                             */
 /******************************************************************************/
-prog_head     	--> [program], id, ['('], [input], [','], [output], [')'], [';'].
+prog_head     	--> program, id, lpar, input, comma, output, rpar, scolon.
 
 
 
@@ -64,7 +64,7 @@ assign_stat		-->  id, assign, expr.
 expr			-->  term | term, add, expr.
 term			-->  factor | factor, mult, term.
 factor			-->  lpar, expr, rpar | operand.
-operand			-->  id | num.
+operand			-->  id | number.
 
 /******************************************************************************/
 /* Lexer								      */	
