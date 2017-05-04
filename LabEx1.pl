@@ -17,29 +17,55 @@ prog_head     	--> [program], id, ['('], [input], [','], [output], [')'], [';'].
 id		--> [a]|[b]|[c].
 num		--> [0],[1],[2],[3],[4],[5],[6],[7],[8],[9].
 
+
+
+/******************************************************************************/
+/* Terminals                                                                  */
+/******************************************************************************/
+lpar    -->  [40].  % (
+rpar    -->  [41].  % )
+mult    -->  [42].  % *
+add     -->  [43].  % +
+comma   -->  [44].  % ,
+dot     -->  [46].  % .
+colon   -->  [58].  % :
+scolon  -->  [59].  % ;
+
+program --> [256].  % program
+input   --> [257].  % input 
+output  --> [258].  % output 
+var     --> [259].  % var
+integer --> [260].  % integer
+begin   --> [261].  % begin
+end     --> [262].  % end
+boolean --> [263].  % boolean
+real    --> [264].  % real
+id      --> [270].  %id
+a       --> [270].
+b       --> [270].
+c       --> [270].
+assign  --> [271].  % assign
+number  --> [272].  % number
+
 /******************************************************************************/
 /* Var_part                                                                   */
 /******************************************************************************/
-var_part             --> [var], var_dec_list.
-
+var_part             --> var, var_dec_list.
 var_dec_list	     --> var_dec | var_dec, var_dec_list.
-
-var_dec		     --> id_list, [':'], type, [';'].
-
-id_list		     --> id | id, [','], id_list.
-
-type		     --> [integer] | [boolean] | [real].
+var_dec		     --> id_list, colon, type, scolon.
+id_list		     --> id | id, comma, id_list.
+type		     --> integer | boolean | real.
 
 /******************************************************************************/
 /* Stat part                                                                  */
 /******************************************************************************/
-stat_part		-->  [begin], stat_list, [end], ['.'].
-stat_list		-->  stat | stat, [';'], stat_list.
+stat_part		-->  begin, stat_list, end, dot.
+stat_list		-->  stat | stat, scolon, stat_list.
 stat			-->  assign_stat.
-assign_stat		-->  id, [assign], expr.
-expr			-->  term | term, ['+'], expr.
-term			-->  factor | factor, ['*'], term.
-factor			-->  ['('], expr, [')'] | operand.
+assign_stat		-->  id, assign, expr.
+expr			-->  term | term, add, expr.
+term			-->  factor | factor, mult, term.
+factor			-->  lpar, expr, rpar | operand.
 operand			-->  id | num.
 
 
@@ -114,9 +140,7 @@ stat_part_todo(_,_)  :-   write('stat_part: To Be Done'), nl.
 /******************************************************************************/
 
 testvar :- var_part([var, a, ':', integer, ';', b, ',' , c,':', real, ';'], []).
-
 teststat :- stat_part([begin, a, assign, b, '*', c, ';', a, assign, b, '+', c, end, '.'], []).
-
 testph :- prog_head([program, c, '(', input, ',', output, ')', ';'], []).
 testpr :-   program([program, c, '(', input, ',', output, ')', ';'], []).
 
