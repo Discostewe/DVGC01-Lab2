@@ -1,7 +1,6 @@
 lexer([],[]).
 lexer([H|T],[F|S]) :- match(H,F), lexer(T,S). 
 
-match(L,T) :- name(L, [H|Tail]), char_type(H, end_of_file), T is 275.
 match(L,T) :- L = 'program', T is 256.
 match(L,T) :- L = 'input'  , T is 257.
 match(L,T) :- L = 'output' , T is 258.
@@ -27,6 +26,7 @@ match(L,T) :- name(L, [H|Tail]), char_type(H, alpha), match_id(Tail), T is 270.
 
 match(L,T) :- name(L, [H|Tail]), char_type(H,digit), match_num(Tail), T is 272.
 
+match(L,T) :-  char_type(L, end_of_file), T is 275.
 match(L,T) :- char_type(L, ascii)  , T is 273.
 
 
