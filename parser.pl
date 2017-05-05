@@ -17,6 +17,29 @@ prog_head     	--> program, id, lpar, input, comma, output, rpar, scolon.
 
 
 
+
+/******************************************************************************/
+/* Var_part                                                                   */
+/******************************************************************************/
+var_part             --> var, var_dec_list.
+var_dec_list	     --> var_dec | var_dec, var_dec_list.
+var_dec		     --> id_list, colon, type, scolon.
+id_list		     --> id | id, comma, id_list.
+type		     --> integer | boolean | real.
+
+/******************************************************************************/
+/* Stat part                                                                  */
+/******************************************************************************/
+stat_part		-->  begin, stat_list, end, dot.
+stat_list		-->  stat | stat, scolon, stat_list.
+stat			-->  assign_stat.
+assign_stat		-->  id, assign, expr.
+expr			-->  term | term, add, expr.
+term			-->  factor | factor, mult, term.
+factor			-->  lpar, expr, rpar | operand.
+operand			-->  id | number.
+ 
+
 /******************************************************************************/
 /* Terminals                                                                  */
 /******************************************************************************/
@@ -44,28 +67,6 @@ b       --> [270].
 c       --> [270].
 assign  --> [271].  % assign
 number  --> [272].  % number
-
-/******************************************************************************/
-/* Var_part                                                                   */
-/******************************************************************************/
-var_part             --> var, var_dec_list.
-var_dec_list	     --> var_dec | var_dec, var_dec_list.
-var_dec		     --> id_list, colon, type, scolon.
-id_list		     --> id | id, comma, id_list.
-type		     --> integer | boolean | real.
-
-/******************************************************************************/
-/* Stat part                                                                  */
-/******************************************************************************/
-stat_part		-->  begin, stat_list, end, dot.
-stat_list		-->  stat | stat, scolon, stat_list.
-stat			-->  assign_stat.
-assign_stat		-->  id, assign, expr.
-expr			-->  term | term, add, expr.
-term			-->  factor | factor, mult, term.
-factor			-->  lpar, expr, rpar | operand.
-operand			-->  id | number.
-
 /******************************************************************************/
 /* Lexer								      */	
 /******************************************************************************/
