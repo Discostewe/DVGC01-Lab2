@@ -20,8 +20,10 @@ readword(C, W, _)  :- C = -1, W = C.                    /* added EOF handling */
 
 readword(C,W,C2) :- C = 58, get0(C1), readwordaux(C,W,C1,C2).
 
-readword(C, W, C1) :- single_character( C ), name(W, [C]), get0(C1).
+readword(C, W, C2) :- C<58, C>47, name(W, [C]), get0(C2).
 
+readword(C, W, C1) :- single_character( C ), name(W, [C]), get0(C1).
+ 
 readword(C, W, C2) :-
    in_word(C, NewC ),
    get0(C1),
@@ -29,13 +31,10 @@ readword(C, W, C2) :-
    name(W, [NewC|Cs]).
 
 readword(_, W, C2) :- get0(C1), readword(C1, W, C2).
-
-
+ 
 readwordaux(C,W,C1,C2) :- C1 = 61, name(W,[C,C1]), get0(C2).
 
 readwordaux(C,W,C1,C2) :- C1 \= 61, name(W,[C]), C1 = C2.
-
-
 
 restword(C, [NewC|Cs], C2) :-
    in_word(C, NewC),
@@ -59,7 +58,7 @@ single_character(59).                  /* ; */
 single_character(58).                  /* : */
 single_character(61).                  /* = */
 single_character(46).                  /* . */
-
+single_character(45).		       /* - */	
 
 
 /******************************************************************************/
@@ -83,7 +82,7 @@ lastword('.').
 /* ttrace - file input + switch on tracing (check this carefully)             */
 /******************************************************************************/
 testa   :- testread(['cmreader.txt', 'testok1.pas']).
-testb   :- tell('cmreader.out'), testread(['cmreader.txt', 'testok1.pas']), told.
+testb   :- tell('cmreader.out'), testread(['cmreader.txt', 'testfiles/testw.pas']), told.
 ttrace  :- trace, testread(['cmreader.txt']), notrace, nodebug.
 testread([]).
 testread([H|T]) :- nl, write('Testing C&M Reader, input file: '), write(H), nl,
