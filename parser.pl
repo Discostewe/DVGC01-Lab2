@@ -62,9 +62,7 @@ end     --> [262].  % end
 boolean --> [263].  % boolean
 real    --> [264].  % real
 id      --> [270].  %id
-a       --> [270].
-b       --> [270].
-c       --> [270].
+
 assign  --> [271].  % assign
 number  --> [272].  % number
 /******************************************************************************/
@@ -88,6 +86,7 @@ testall :-  parseFiles( [ 'testfiles/testok1.pas', 'testfiles/testok2.pas', 'tes
                           'testfiles/testv.pas', 'testfiles/testw.pas', 'testfiles/testx.pas', 'testfiles/testy.pas', 'testfiles/testz.pas',
                           'testfiles/fun1.pas', 'testfiles/fun2.pas', 'testfiles/fun3.pas', 'testfiles/fun4.pas', 'testfiles/fun5.pas', 
                           'testfiles/sem1.pas', 'testfiles/sem2.pas', 'testfiles/sem3.pas', 'testfiles/sem4.pas', 'testfiles/sem5.pas']).
+
 testallout :- tell('tests.out'),
 	write('Testing OK programs'), nl, nl,
 
